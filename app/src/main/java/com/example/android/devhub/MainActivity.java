@@ -2,9 +2,13 @@ package com.example.android.devhub;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.android.devhub.db.EditProfileActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -63,10 +67,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this,"Please enter password",Toast.LENGTH_LONG).show();
             return;
         }
-
+        if (password.length()<6){
+            Toast.makeText(getApplicationContext(),"Password must be more than 6 digit",Toast.LENGTH_LONG).show();
+        }
         //if the email and password are not empty
         //displaying a progress dialog
-
+        else{
         progressDialog.setMessage("Registering Please Wait...");
         progressDialog.show();
 
@@ -79,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if(task.isSuccessful()){
                             //display some message here
                             Toast.makeText(MainActivity.this,"Successfully registered",Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                            startActivity(new Intent(getApplicationContext(), EditProfileActivity.class));
                         }else{
                             //display some message here
                             Toast.makeText(MainActivity.this,"Registration Error",Toast.LENGTH_LONG).show();
@@ -88,16 +94,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
 
-    }
+    }}
     @Override
     public void onClick(View view) {
         if(view == buttonSignup){
-            registerUser();
+            if(isNetworkAvailable())
+                registerUser();
+            else
+                Toast.makeText(getApplicationContext(),"Not connected to internet",Toast.LENGTH_SHORT).show();
         }
 
         if(view == textViewSignin){
             //open login activity when user taps on the already registered textview
             startActivity(new Intent(this, LoginActivity.class));
         }
+    }
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }
