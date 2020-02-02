@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         //if the objects getcurrentuser method is not null
         //means user is already logged in
-        if(firebaseAuth.getCurrentUser() != null){
+        if (firebaseAuth.getCurrentUser() != null) {
             //close this activity
             finish();
             //opening profile activity
@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         buttonSignIn = (Button) findViewById(R.id.buttonSignin);
-        textViewSignup  = (TextView) findViewById(R.id.textViewSignUp);
+        textViewSignup = (TextView) findViewById(R.id.textViewSignUp);
 
         progressDialog = new ProgressDialog(this);
 
@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             if (task.isSuccessful()) {
                                 //start the profile activity
                                 finish();
-                                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                             } else {
                                 //display some message here
                                 Toast.makeText(LoginActivity.this, "Invalid Credentials", Toast.LENGTH_LONG).show();
@@ -116,17 +116,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        if(view == buttonSignIn){
-           if(isNetworkAvailable())
-               userLogin();
-           else Toast.makeText(getApplicationContext(),"Not connected to internet",Toast.LENGTH_SHORT).show();
+        if (view == buttonSignIn) {
+            if (isNetworkAvailable())
+                userLogin();
+            else
+                Toast.makeText(getApplicationContext(), "Not connected to internet", Toast.LENGTH_SHORT).show();
         }
 
-        if(view == textViewSignup){
+        if (view == textViewSignup) {
             finish();
             startActivity(new Intent(this, MainActivity.class));
         }
     }
+
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.android.devhub.HomeActivity;
 import com.example.android.devhub.LoginActivity;
+import com.example.android.devhub.ProfileActivity;
 import com.example.android.devhub.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -39,7 +40,7 @@ import java.io.IOException;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener{
+public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = EditProfileActivity.class.getSimpleName();
     Button btnsave;
@@ -47,18 +48,16 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private TextView textViewemailname;
     private DatabaseReference databaseReference;
     private EditText editTextName;
-    private EditText editTextSurname;
-    private EditText editTextPhoneNo;
+    private EditText editTextPhoneNo, editTextDesc, editTextSkill, editTextLinkedin, editTextGithub;
     private ImageView profileImageView;
     private FirebaseStorage firebaseStorage;
-    private  FirebaseUser user;
+    private FirebaseUser user;
     private static int PICK_IMAGE = 123;
     Uri imagePath;
     private StorageReference storageReference;
 
 
-
-   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data.getData() != null) {
             imagePath = data.getData();
             try {
@@ -74,23 +73,26 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-        firebaseAuth=FirebaseAuth.getInstance();
-        if (firebaseAuth.getCurrentUser() == null){
+        firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser() == null) {
             finish();
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         }
 
-        editTextName = (EditText)findViewById(R.id.EditTextName);
-        editTextSurname = (EditText)findViewById(R.id.EditTextSurname);
-        editTextPhoneNo = (EditText)findViewById(R.id.EditTextPhoneNo);
-        btnsave=(Button)findViewById(R.id.btnSaveButton);
-        user=firebaseAuth.getCurrentUser();
+        editTextName = (EditText) findViewById(R.id.EditTextName);
+        editTextPhoneNo = (EditText) findViewById(R.id.EditTextPhoneNo);
+        editTextDesc = (EditText) findViewById(R.id.EditTextDesc);
+        editTextSkill = (EditText) findViewById(R.id.EditTextSkill);
+        editTextLinkedin = (EditText) findViewById(R.id.EditTextlinkedIn);
+        editTextGithub = (EditText) findViewById(R.id.EditTextGithub);
+        btnsave = (Button) findViewById(R.id.btnSaveButton);
+        user = firebaseAuth.getCurrentUser();
         btnsave.setOnClickListener(this);
-        textViewemailname=(TextView)findViewById(R.id.textViewEmailAdress);
+        textViewemailname = (TextView) findViewById(R.id.textViewEmailAdress);
         textViewemailname.setText(user.getEmail());
         profileImageView = findViewById(R.id.update_imageView);
-       firebaseStorage = FirebaseStorage.getInstance();
-       databaseReference = FirebaseDatabase.getInstance().getReference();
+        firebaseStorage = FirebaseStorage.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         storageReference = firebaseStorage.getReference();
         profileImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,15 +104,20 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             }
         });
     }
-   private void userInformation(){
+
+    private void userInformation() {
         String name = editTextName.getText().toString().trim();
-        String surname = editTextSurname.getText().toString().trim();
         String phoneno = editTextPhoneNo.getText().toString().trim();
-        Userinformation userinformation = new Userinformation(name,surname,phoneno);
+        String desc = editTextDesc.getText().toString().trim();
+        String skill = editTextSkill.getText().toString().trim();
+        String link = editTextLinkedin.getText().toString().trim();
+        String github = editTextGithub.getText().toString().trim();
+        Userinformation userinformation = new Userinformation(name, phoneno, desc, skill, link, github);
         FirebaseUser user = firebaseAuth.getCurrentUser();
         databaseReference.child(user.getUid()).setValue(userinformation);
-        Toast.makeText(getApplicationContext(),"User information updated",Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "User information updated", Toast.LENGTH_LONG).show();
     }
+
     @Override
     public void onClick(View view) {
         if (view == btnsave) {
@@ -122,12 +129,12 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 userInformation();
                 sendUserData();
                 finish();
-                startActivity(new Intent(EditProfileActivity.this, HomeActivity.class));
+                startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class));
             } else {
                 userInformation();
                 sendUserData();
                 finish();
-                startActivity(new Intent(EditProfileActivity.this, HomeActivity.class));
+                startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class));
             }
         }
     }
@@ -151,32 +158,32 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         });
     }
 
-        public void openSelectProfilePictureDialog(){
-            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-            TextView title = new TextView(this);
-            title.setText("Profile Picture");
-            title.setPadding(10, 10, 10, 10);   // Set Position
-            title.setGravity(Gravity.CENTER);
-            title.setTextColor(Color.BLACK);
-            title.setTextSize(20);
-            alertDialog.setCustomTitle(title);
-            TextView msg = new TextView(this);
-            msg.setText("Please select a profile picture \n Tap the sample avatar logo");
-            msg.setGravity(Gravity.CENTER_HORIZONTAL);
-            msg.setTextColor(Color.BLACK);
-            alertDialog.setView(msg);
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    // Perform Action on Button
-                }
-            });
-            new Dialog(getApplicationContext());
-            alertDialog.show();
-            final Button okBT = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL);
-            LinearLayout.LayoutParams neutralBtnLP = (LinearLayout.LayoutParams) okBT.getLayoutParams();
-            neutralBtnLP.gravity = Gravity.FILL_HORIZONTAL;
-            okBT.setPadding(50, 10, 10, 10);   // Set Position
-            okBT.setTextColor(Color.BLUE);
-            okBT.setLayoutParams(neutralBtnLP);
-        }
+    public void openSelectProfilePictureDialog() {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        TextView title = new TextView(this);
+        title.setText("Profile Picture");
+        title.setPadding(10, 10, 10, 10);   // Set Position
+        title.setGravity(Gravity.CENTER);
+        title.setTextColor(Color.BLACK);
+        title.setTextSize(20);
+        alertDialog.setCustomTitle(title);
+        TextView msg = new TextView(this);
+        msg.setText("Please select a profile picture \n Tap the sample avatar logo");
+        msg.setGravity(Gravity.CENTER_HORIZONTAL);
+        msg.setTextColor(Color.BLACK);
+        alertDialog.setView(msg);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Perform Action on Button
+            }
+        });
+        new Dialog(getApplicationContext());
+        alertDialog.show();
+        final Button okBT = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL);
+        LinearLayout.LayoutParams neutralBtnLP = (LinearLayout.LayoutParams) okBT.getLayoutParams();
+        neutralBtnLP.gravity = Gravity.FILL_HORIZONTAL;
+        okBT.setPadding(50, 10, 10, 10);   // Set Position
+        okBT.setTextColor(Color.BLUE);
+        okBT.setLayoutParams(neutralBtnLP);
     }
+}

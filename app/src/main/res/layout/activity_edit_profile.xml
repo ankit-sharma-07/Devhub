@@ -3,105 +3,212 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
-        android:layout_height="192dp"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:toolbarId="@+id/toolbar"
+            app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:contentScrim="?attr/colorPrimary">
+            app:toolbarId="@+id/toolbar">
+
             <ImageView
                 android:id="@+id/update_imageView"
                 android:layout_width="match_parent"
-                android:layout_height="182dp"
+                android:layout_height="140dp"
+                android:foreground="@drawable/rounded_fg"
                 android:gravity="center_vertical"
-                android:src="@drawable/avatar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:foreground="@drawable/rounded_fg"/>
+                android:src="@drawable/avatar" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#000000"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/textViewProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="create profile"
-                android:textColor="@color/colorPrimaryDark"
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
+                android:text="Create Profile"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/colorPrimaryDark" />
+
             <TextView
                 android:id="@+id/TextViewName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="name"
-                android:textColor="@color/colorPrimaryDark"/>
+                android:layout_marginLeft="5dp"
+                android:text="Name"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20dp" />
+
             <EditText
                 android:id="@+id/EditTextName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName|textCapSentences"
-                android:hint="Enter your name"/>
-            <TextView
-                android:id="@+id/TextViewSurName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="surname"
-                android:textColor="@color/colorPrimaryDark"/>
-            <EditText
-                android:id="@+id/EditTextSurname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName|textCapSentences"
-                android:hint="Enter your surname"/>
+                android:layout_marginLeft="5dp"
+                android:hint="Enter your name"
+                android:inputType="textPersonName|textCapSentences|textMultiLine"
+                android:textColor="#bdbdbd"
+                android:textColorHint="#bdbdbd"
+                android:textSize="17dp" />
+
             <TextView
                 android:id="@+id/TextViewPhoneNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Phone number"
-                android:textColor="@color/colorPrimaryDark"/>
+                android:layout_marginLeft="5dp"
+                android:text="Phone Number"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20dp" />
+
             <EditText
                 android:id="@+id/EditTextPhoneNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
+                android:layout_marginLeft="5dp"
                 android:hint="Enter your phone number"
-                android:inputType="number"/>
+                android:inputType="number"
+                android:textColor="#bdbdbd"
+                android:textColorHint="#bdbdbd"
+                android:textSize="17dp" />
+
             <TextView
                 android:id="@+id/TextViewEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:text="Email"
-                android:textColor="@color/colorPrimaryDark"/>
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20dp" />
+
             <TextView
                 android:id="@+id/textViewEmailAdress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="email address"
-                android:textColor="@color/colorPrimaryDark"/>
-            <Button
+                android:layout_margin="5dp"
+                android:layout_marginLeft="5dp"
+                android:text="Email address"
+                android:textColor="#bdbdbd"
+                android:textSize="17dp" />
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="OK"
+                android:layout_marginLeft="5dp"
+                android:text="Description"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/EditTextDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:hint="Enter your description"
+                android:inputType="textPersonName|textCapSentences|textMultiLine"
+                android:maxLength="200"
+                android:textColor="#bdbdbd"
+                android:textColorHint="#bdbdbd"
+                android:textSize="17dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Skills"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="seperate with ' | ' "
+                android:textColor="@color/colorPrimary"
+                android:textSize="12dp"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="eg. c++ | Java"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12dp"></TextView>
+
+            <EditText
+                android:id="@+id/EditTextSkill"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginLeft="5dp"
+                android:inputType="textPersonName|textCapSentences|textMultiLine"
+                android:textColor="#bdbdbd"
+                android:textSize="17dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Link to profile"
+                android:textSize="20dp"></TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="linkedIn"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/EditTextlinkedIn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:inputType="textPersonName|textCapSentences|textMultiLine"
+                android:textColor="#bdbdbd"
+                android:textSize="17dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Github"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/EditTextGithub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:inputType="textPersonName|textCapSentences|textMultiLine"
+                android:textColor="#bdbdbd"
+                android:textSize="17dp" />
+
+            <Button
                 android:id="@+id/btnSaveButton"
-                android:layout_marginTop="10dp"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
                 android:background="@drawable/buttonback"
-                android:textColor="@color/colorPrimaryDark"/>
+                android:text="SUBMIT"
+                android:textColor="#000000"
+                android:textSize="20dp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
