@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -50,18 +51,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="Ankit Sharma"
+                android:text=""
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="35sp" />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"> <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:text="Description"
+    android:textColor="@color/colorPrimary"
+    android:textSize="20dp"></TextView>
+    <ImageView
+        android:id="@+id/edit_desc"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/edit"></ImageView></LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="Description"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20dp"></TextView>
 
             <TableRow
                 android:layout_width="fill_parent"
@@ -75,20 +86,30 @@
                     android:layout_margin="10dp"
                     android:layout_marginTop="1dp"
                     android:layout_marginBottom="1dp"
-                    android:text="your description"
+                    android:text=""
+                    android:textIsSelectable="true"
                     android:textColor="#a8a8a8"
                     android:textSize="17dp" />
 
             </TableRow>
 
-            <TextView
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"> <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="Skills"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20dp"></TextView>
-
+            <ImageView
+                android:id="@+id/edit_skills"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/edit"></ImageView></LinearLayout>
             <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -101,7 +122,8 @@
                     android:layout_margin="10dp"
                     android:layout_marginTop="1dp"
                     android:layout_marginBottom="1dp"
-                    android:text="c | C++ | JAVA"
+                    android:text=""
+                    android:textIsSelectable="true"
                     android:textColor="#a8a8a8"
                     android:textSize="17dp" />
 
@@ -119,7 +141,12 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2">
-
+<ImageView
+    android:id="@+id/editMail"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:scaleType="centerCrop"
+    android:src="@drawable/email"></ImageView>
                 <TextView
                     android:id="@+id/textViewEmailAdress"
                     android:layout_width="match_parent"
@@ -127,7 +154,8 @@
                     android:layout_margin="10dp"
                     android:layout_marginTop="1dp"
                     android:layout_marginBottom="1dp"
-                    android:text="mail_address"
+                    android:text=""
+                    android:textIsSelectable="true"
                     android:textColor="#a8a8a8"
                     android:textSize="17dp" />
             </TableRow>
@@ -136,6 +164,13 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2">
+                <ImageView
+                    android:id="@+id/editPhone"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/mobile"></ImageView>
 
                 <TextView
                     android:id="@+id/profile_phoneno_textView"
@@ -144,7 +179,7 @@
                     android:layout_margin="10dp"
                     android:layout_marginTop="1dp"
                     android:layout_marginBottom="1dp"
-                    android:text="9650231112"
+                    android:text=""
                     android:textColor="#a8a8a8"
                     android:textSize="17dp" />
 
@@ -154,7 +189,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2">
-
+                <ImageView
+                    android:id="@+id/editLinkedin"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/linkedin"></ImageView>
                 <TextView
                     android:id="@+id/profile_linkedin"
                     android:layout_width="match_parent"
@@ -162,7 +201,8 @@
                     android:layout_margin="10dp"
                     android:layout_marginTop="1dp"
                     android:layout_marginBottom="1dp"
-                    android:text="abcc/linkede.in"
+                    android:text=""
+                    android:clickable="true"
                     android:textColor="#a8a8a8"
                     android:textSize="17dp" />
 
@@ -172,33 +212,40 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2">
-
+                <ImageView
+                    android:id="@+id/editGithub"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/gitub"></ImageView>
                 <TextView
                     android:id="@+id/profile_github"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
                     android:layout_margin="10dp"
                     android:layout_marginTop="1dp"
                     android:layout_marginBottom="1dp"
-                    android:text="acmadad/github.com"
+                    android:text=""
                     android:textColor="#a8a8a8"
                     android:textSize="17dp" />
 
             </TableRow>
 
-            <TextView
+            <Button
                 android:id="@+id/btn_log_out"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
+                android:background="@drawable/buttonback"
                 android:layout_marginBottom="20dp"
                 android:clickable="true"
                 android:gravity="center"
                 android:onClick="navigateLogOut"
                 android:text="logout"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="17dp" />
+                android:textColor="#000000" />
+
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
