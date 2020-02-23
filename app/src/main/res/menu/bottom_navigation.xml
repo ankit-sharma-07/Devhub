@@ -4,21 +4,15 @@
     <item
         android:id = "@+id/action_favorites"
         android:enabled = "true"
-        android:icon="@drawable/home"
-        android:title="Favorites"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:title="Search"
         app:showAsAction = "ifRoom"
         />
-    <item
-        android:id = "@+id/action_home"
-        android:enabled = "true"
-        android:icon="@drawable/home"
-        android:title="Home"
-        app:showAsAction = "ifRoom"
-        />
+
     <item
         android:id = "@+id/action_profile"
         android:enabled = "true"
-        android:icon="@drawable/profile"
+        android:icon="@drawable/ic_person_white_24dp"
         android:title="Profile"
         app:showAsAction = "ifRoom"
         />

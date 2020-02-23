@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             //close this activity
             finish();
             //opening profile activity
-            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
         }
 
         //initializing views
@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         buttonSignIn = (Button) findViewById(R.id.buttonSignin);
         textViewSignup = (TextView) findViewById(R.id.textViewSignUp);
-textViewForget=(TextView)findViewById(R.id.textViewForget);
+        textViewForget = (TextView) findViewById(R.id.textViewForget);
         progressDialog = new ProgressDialog(this);
 
         //attaching click listener
@@ -105,7 +105,7 @@ textViewForget=(TextView)findViewById(R.id.textViewForget);
                             if (task.isSuccessful()) {
                                 //start the profile activity
                                 finish();
-                                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                             } else {
                                 //display some message here
                                 Toast.makeText(LoginActivity.this, "Invalid Credentials", Toast.LENGTH_LONG).show();
@@ -129,9 +129,8 @@ textViewForget=(TextView)findViewById(R.id.textViewForget);
             finish();
             startActivity(new Intent(this, MainActivity.class));
         }
-        if(view==textViewForget)
-        {
-            startActivity(new Intent(LoginActivity.this,ResetPassword.class));
+        if (view == textViewForget) {
+            startActivity(new Intent(LoginActivity.this, ResetPassword.class));
         }
     }
 

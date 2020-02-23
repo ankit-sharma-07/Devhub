@@ -184,6 +184,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+                android:hint="Enter your linkedIn username"
                 android:inputType="textUri"
                 android:padding="10dp"
 
@@ -206,6 +207,7 @@
                 android:padding="10dp"
                 android:layout_marginLeft="5dp"
                 android:inputType="textUri"
+                android:hint="Enter your Github username"
                 android:background="@drawable/border"
                 android:textColor="#bdbdbd"
                 android:textSize="17dp" />

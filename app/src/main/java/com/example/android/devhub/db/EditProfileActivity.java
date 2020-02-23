@@ -125,7 +125,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         String skill = editTextSkill.getText().toString().trim();
         String link = editTextLinkedin.getText().toString().trim();
         String github = editTextGithub.getText().toString().trim();
-        Userinformation userinformation = new Userinformation(name, phoneno, desc, skill, link, github);
+        Userinformation userinformation = new Userinformation(firebaseAuth.getUid(), name, user.getEmail(), phoneno, desc, skill, link, github);
         FirebaseUser user = firebaseAuth.getCurrentUser();
         databaseReference.child(user.getUid()).setValue(userinformation);
 
@@ -135,38 +135,33 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View view) {
         if (view == btnsave) {
-            boolean l= Pattern.matches("http(s)?:\\/\\/([\\w]+\\.)?linkedin\\.com\\/in\\/[A-z0-9_-]+\\/?",editTextLinkedin.getText().toString());
-            boolean g=Pattern.matches("http(s)?:\\/\\/(www\\.)?github\\.com\\/[A-z0-9_-]+\\/?",editTextGithub.getText().toString());
-            if(editTextName.getText().toString().length()==0)
-            {
-                Toast.makeText(getApplicationContext(),"Please enter name",Toast.LENGTH_SHORT).show();
-            }
-            else if(!l && editTextLinkedin.getText().toString().length()!=0)
-            {
-                Toast.makeText(getApplicationContext(),"Enter valid linkedin profile url",Toast.LENGTH_SHORT).show();
-            }
-            else if(!g && editTextGithub.getText().toString().length()!=0)
-            {
-                Toast.makeText(getApplicationContext(),"Enter valid Github profile url",Toast.LENGTH_SHORT).show();
-            }
-            else{
-            p=new ProgressDialog(this);
-            p.setMessage("uploading....");
-            p.show();
-            if (imagePath == null) {
-
-                Drawable drawable = this.getResources().getDrawable(R.drawable.defavatar);
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.defavatar);
-                userInformation();
-                sendUserData();
-                finish();
-                startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class));
+            boolean l = Pattern.matches("[A-z0-9_-]+", editTextLinkedin.getText().toString().trim());
+            boolean g = Pattern.matches("[A-z0-9_-]+", editTextGithub.getText().toString().trim());
+            if (editTextName.getText().toString().length() == 0) {
+                Toast.makeText(getApplicationContext(), "Please enter name", Toast.LENGTH_SHORT).show();
+            } else if (!l && editTextLinkedin.getText().toString().length() != 0) {
+                Toast.makeText(getApplicationContext(), "Enter valid linkedin Username", Toast.LENGTH_SHORT).show();
+            } else if (!g && editTextGithub.getText().toString().length() != 0) {
+                Toast.makeText(getApplicationContext(), "Enter valid Github Username", Toast.LENGTH_SHORT).show();
             } else {
-                userInformation();
-                sendUserData();
+                p = new ProgressDialog(this);
+                p.setMessage("uploading....");
+                p.show();
+                if (imagePath == null) {
 
+                    Drawable drawable = this.getResources().getDrawable(R.drawable.defavatar);
+                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.defavatar);
+                    userInformation();
+                    sendUserData();
+                    finish();
+                    startActivity(new Intent(EditProfileActivity.this, HomeActivity.class));
+                } else {
+                    userInformation();
+                    sendUserData();
+
+                }
             }
-        }}
+        }
     }
 
     private void sendUserData() {
@@ -194,7 +189,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 p.dismiss();
                 Toast.makeText(EditProfileActivity.this, "Profile uploaded", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class));
+                finish();
+                startActivity(new Intent(EditProfileActivity.this, HomeActivity.class));
             }
         });
 

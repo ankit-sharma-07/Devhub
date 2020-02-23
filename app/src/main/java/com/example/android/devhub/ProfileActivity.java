@@ -54,7 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
-    private TextView profileNameTextView,profilePhonenoTextView;
+    private TextView profileNameTextView, profilePhonenoTextView;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
     private ImageView profilePicImageView;
@@ -65,7 +65,8 @@ public class ProfileActivity extends AppCompatActivity {
     ProgressDialog p;
     Uri imagePath;
     private static int PICK_IMAGE = 123;
-    ImageView editDesc,editSkills,editMail,editPhone,editLinkedin,editGithub;
+    ImageView editDesc, editSkills, editMail, editPhone, editLinkedin, editGithub;
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data.getData() != null) {
             imagePath = data.getData();
@@ -81,12 +82,14 @@ public class ProfileActivity extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(imagePath!=null)
-        {p=new ProgressDialog(this);
+        if (imagePath != null) {
+            p = new ProgressDialog(this);
             p.setMessage("uploading....");
             p.show();
-            sendUserData();}
+            sendUserData();
+        }
     }
+
     private void sendUserData() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
@@ -122,18 +125,18 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         final ProgressDialog dialog;
-        dialog=new ProgressDialog(this);
+        dialog = new ProgressDialog(this);
         dialog.show();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         editTextName = (EditText) findViewById(R.id.et_username);
         profilePicImageView = findViewById(R.id.profile_pic_imageView);
         profileNameTextView = findViewById(R.id.profile_name_textView);
         profilePhonenoTextView = findViewById(R.id.profile_phoneno_textView);
-        editDesc=(ImageView)findViewById(R.id.edit_desc);
-        editSkills=(ImageView)findViewById(R.id.edit_skills);
-        editPhone=(ImageView)findViewById(R.id.editPhone);
-        editLinkedin=(ImageView)findViewById(R.id.editLinkedin);
-        editGithub=(ImageView)findViewById(R.id.editGithub);
+        editDesc = (ImageView) findViewById(R.id.edit_desc);
+        editSkills = (ImageView) findViewById(R.id.edit_skills);
+        editPhone = (ImageView) findViewById(R.id.editPhone);
+        editLinkedin = (ImageView) findViewById(R.id.editLinkedin);
+        editGithub = (ImageView) findViewById(R.id.editGithub);
         desc = findViewById(R.id.profile_desc);
         skill = findViewById(R.id.profile_skills);
         linkedin = findViewById(R.id.profile_linkedin);
@@ -176,6 +179,7 @@ public class ProfileActivity extends AppCompatActivity {
                 }
                 dialog.dismiss();
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(ProfileActivity.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
@@ -221,13 +225,13 @@ public class ProfileActivity extends AppCompatActivity {
         linkedin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(linkedin.getText().toString())));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/in/" + linkedin.getText().toString())));
             }
         });
         github.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(github.getText().toString())));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.github.com/" + github.getText().toString())));
             }
         });
         profilePicImageView.setOnClickListener(new View.OnClickListener() {
@@ -242,7 +246,7 @@ public class ProfileActivity extends AppCompatActivity {
         profilePhonenoTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_DIAL,Uri.parse("tel:" + profilePhonenoTextView.getText().toString() )));
+                startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + profilePhonenoTextView.getText().toString())));
             }
         });
 
@@ -303,6 +307,7 @@ public class ProfileActivity extends AppCompatActivity {
         AlertDialog dialog = alert.create();
         dialog.show();
     }
+
     public void buttonClickedEditSkills(View view) {
         LayoutInflater inflater = getLayoutInflater();
         View alertLayout = inflater.inflate(R.layout.layout_custom_dialog_edit_name, null);
@@ -351,20 +356,21 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 String phoneno = etUserPhoneno.getText().toString();
-               databaseReference.child("phoneno").setValue(phoneno);
+                databaseReference.child("phoneno").setValue(phoneno);
                 etUserPhoneno.onEditorAction(EditorInfo.IME_ACTION_DONE);
             }
         });
         AlertDialog dialog = alert.create();
         dialog.show();
     }
+
     public void buttonClickedEditLinkedin(View view) {
         LayoutInflater inflater = getLayoutInflater();
         View alertLayout = inflater.inflate(R.layout.layout_custom_dialog_edit_name, null);
         final EditText etUsername = alertLayout.findViewById(R.id.et_username);
         etUsername.setText(linkedin.getText().toString());
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Edit Linkedin url");
+        alert.setTitle("Edit Linkedin username");
         // this is set the view from XML inside AlertDialog
         alert.setView(alertLayout);
         // disallow cancel of AlertDialog on click of back button and outside touch
@@ -378,26 +384,27 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String name = etUsername.getText().toString();
-                boolean l= Pattern.matches("http(s)?:\\/\\/([\\w]+\\.)?linkedin\\.com\\/in\\/[A-z0-9_-]+\\/?",name);
-                if(!l && name.length()!=0)
-                {
-                    Toast.makeText(getApplicationContext(),"Enter valid linkedin profile url",Toast.LENGTH_SHORT).show();
+                boolean l = Pattern.matches("[A-z0-9_-]+", name);
+                if (!l && name.length() != 0) {
+                    Toast.makeText(getApplicationContext(), "Enter valid linkedin username", Toast.LENGTH_SHORT).show();
+                } else {
+                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                    databaseReference.child("linkedIn").setValue(name);
+                    etUsername.onEditorAction(EditorInfo.IME_ACTION_DONE);
                 }
-                else{FirebaseUser user = firebaseAuth.getCurrentUser();
-                databaseReference.child("linkedIn").setValue(name);
-                etUsername.onEditorAction(EditorInfo.IME_ACTION_DONE);
-            }}
+            }
         });
         AlertDialog dialog = alert.create();
         dialog.show();
     }
+
     public void buttonClickedEditGithub(View view) {
         LayoutInflater inflater = getLayoutInflater();
         View alertLayout = inflater.inflate(R.layout.layout_custom_dialog_edit_name, null);
         final EditText etUsername = alertLayout.findViewById(R.id.et_username);
         etUsername.setText(github.getText().toString());
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Edit Github url");
+        alert.setTitle("Edit Github username");
         // this is set the view from XML inside AlertDialog
         alert.setView(alertLayout);
         // disallow cancel of AlertDialog on click of back button and outside touch
@@ -411,28 +418,20 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String name = etUsername.getText().toString();
-                boolean l= Pattern.matches("http(s)?:\\/\\/(www\\.)?github\\.com\\/[A-z0-9_-]+\\/?",name);
-                if(!l && name.length()!=0)
-                {
-                    Toast.makeText(getApplicationContext(),"Enter valid Github profile url",Toast.LENGTH_SHORT).show();
+                boolean l = Pattern.matches("[A-z0-9_-]+", name);
+                if (!l && name.length() != 0) {
+                    Toast.makeText(getApplicationContext(), "Enter valid Github username", Toast.LENGTH_SHORT).show();
+                } else {
+                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                    databaseReference.child("github").setValue(name);
+                    etUsername.onEditorAction(EditorInfo.IME_ACTION_DONE);
                 }
-               else{ FirebaseUser user = firebaseAuth.getCurrentUser();
-                databaseReference.child("github").setValue(name);
-                etUsername.onEditorAction(EditorInfo.IME_ACTION_DONE);
-            }}
+            }
         });
         AlertDialog dialog = alert.create();
         dialog.show();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent startMain = new Intent(Intent.ACTION_MAIN);
-        startMain.addCategory(Intent.CATEGORY_HOME);
-        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(startMain);
-    }
 
     public void navigateLogOut(View v) {
         FirebaseAuth.getInstance().signOut();
