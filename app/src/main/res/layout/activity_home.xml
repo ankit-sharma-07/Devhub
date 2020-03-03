@@ -21,24 +21,26 @@
         android:textSize="20dp"
         android:layout_height="wrap_content"
         android:text="Search user with email id"></TextView>
-    <ImageView
-        android:id="@+id/img"
-        android:layout_marginTop="25dp"
-        android:layout_below="@+id/search"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_centerInParent="true"
-        android:src="@mipmap/b"></ImageView>
+  <TextView
+    android:id="@+id/about"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="About Us"
+    android:textColor="@color/colorPrimary"
+    android:gravity="center_horizontal"
+  android:layout_marginTop="80dp"
+    android:textSize="21dp"
+    android:layout_below="@+id/txt"></TextView>
 
         <TextView
-            android:layout_below="@+id/img"
+            android:layout_below="@+id/about"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Created By - Ankit Sharma"
+            android:text="Devhub is a platform specifically designed for career and business professionals to connect. Build a profile of your skills,experience and much more \nCreated By - Ankit Sharma"
             android:layout_centerInParent="true"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20dp">
-
+            android:layout_margin="15dp"
+            android:textColor="#a8a8a8"
+            android:textSize="17dp">
         </TextView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
